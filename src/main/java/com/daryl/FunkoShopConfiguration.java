@@ -6,6 +6,7 @@ import io.dropwizard.db.DataSourceFactory;
 
 import javax.validation.Valid;
 import javax.validation.constraints.*;
+import java.nio.charset.StandardCharsets;
 
 public class FunkoShopConfiguration extends Configuration {
 
@@ -17,8 +18,8 @@ public class FunkoShopConfiguration extends Configuration {
     private DataSourceFactory database = new DataSourceFactory();
 
     @JsonProperty("jwtSecret")
-    public String getJwtSecret() {
-        return jwtSecret;
+    public byte[] getJwtSecret() {
+        return jwtSecret.getBytes(StandardCharsets.UTF_8);
     }
 
     @JsonProperty("jwtSecret")

@@ -29,4 +29,11 @@ public class UserResource {
 
         return userService.login(email, password);
     }
+
+    @Path("/register")
+    @POST
+    public Response register(@FormParam("email") @NotNull String email, @FormParam("name") @NotNull String name,
+                             @FormParam("password") @NotNull String password){
+        return userService.register(email, password, name);
+    }
 }
