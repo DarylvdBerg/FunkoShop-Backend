@@ -1,14 +1,11 @@
 package com.daryl.resources;
 
 import com.daryl.api.User;
-import com.daryl.core.Body;
 import com.daryl.service.UserService;
+import io.dropwizard.auth.Auth;
 
 import javax.validation.constraints.NotNull;
-import javax.ws.rs.FormParam;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -35,5 +32,25 @@ public class UserResource {
     public Response register(@FormParam("email") @NotNull String email, @FormParam("name") @NotNull String name,
                              @FormParam("password") @NotNull String password){
         return userService.register(email, password, name);
+    }
+
+    @Path("/profile/{id}")
+    @GET
+    public Response getUserProfile(@Auth User authUser, @PathParam("id") int id){
+        return userService.getUser(authUser, id);
+    }
+
+    @Path("/changePassword/{id}")
+    @PUT
+    public Response changeUserPassword(@Auth User authUser, @PathParam("id") int id, @FormParam("oldPassword") @NotNull String oldPassword,
+                                       @FormParam("password") @NotNull String password){
+        return userService.changeUserPassword(authUser, id, password, oldPassword);
+    }
+
+    @Path("/editUser/{id}")
+    @PUT
+    public Response editUser(@Auth User authUser, @PathParam("id") int id,
+                             @FormParam("email") @NotNull String email, @FormParam("name") @NotNull String name){
+        return userService.editUser(authUser, id, email, name);
     }
 }

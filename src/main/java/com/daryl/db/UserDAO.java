@@ -31,4 +31,14 @@ public interface UserDAO {
 
     @SqlQuery("SELECT * FROM users WHERE id = :id")
     User getUserFromId(@Bind("id") int id);
+
+    @SqlUpdate("UPDATE users SET privileges = :privileges WHERE id = :id")
+    void changeUserPrivileges(@Bind("privileges") int privileges, @Bind("id") int id);
+
+    @SqlUpdate("UPDATE users SET password = :password WHERE id = :id")
+    void updateUserPassword(@Bind("password") String password, @Bind("id") int id);
+
+    @SqlUpdate("UPDATE users SET email = :email, SET name = :name")
+    void updateUserDetails(@Bind("email") String email, @Bind("name") String name);
+
 }

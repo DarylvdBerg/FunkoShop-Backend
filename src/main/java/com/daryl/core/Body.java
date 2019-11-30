@@ -40,4 +40,13 @@ public class Body {
                 .entity(this)
                 .build();
     }
+
+    public static Response createResponse(Body body, Response.Status status, String message, Object content){
+        if(content != null){
+            body.setContent(content);
+        }
+        body.setStatus(status);
+        body.setMessage(message);
+        return body.build();
+    }
 }
