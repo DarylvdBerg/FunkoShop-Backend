@@ -20,4 +20,5 @@ public class MessageUtil {
     public static final String PRODUCT_DELETED = "Verwijderen van het product is gelukt!";
     public static final String PRODUCT_UPDATED = "Bijwerken van product is gelukt";
     public static final String PRODUCT_OPERATION_FAILED = "Bijwerken, aanmaken of verwijderen van product is niet gelukt";
+    public static final String PRODUCT_CREATED = "Product is aangemaakt";
 }

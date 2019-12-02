@@ -8,7 +8,6 @@ import com.daryl.db.ProductDAO;
 import com.daryl.util.MessageUtil;
 import com.daryl.util.PrivilegeUtil;
 import org.jdbi.v3.core.statement.UnableToExecuteStatementException;
-import org.jose4j.jwt.MalformedClaimException;
 
 import javax.ws.rs.core.Response;
 
@@ -82,6 +81,20 @@ public class ProductService {
             body.setMessage(MessageUtil.PRODUCT_DELETED);
             return body.build();
         } catch (UnableToExecuteStatementException e){
+            return Body.createResponse(body, BAD_REQUEST, MessageUtil.PRODUCT_OPERATION_FAILED, null);
+        }
+    }
+
+    public Response addProduct(User authUser, String name, String description, int amount) {
+        Body body = new Body();
+        if(!PrivilegeUtil.checkPrivilege(authUser, PrivilegeUtil.ADD_PRODUCT)){
+            return Body.createResponse(body, BAD_REQUEST, MessageUtil.USER_NOT_ENOUGH_PRIVILEGE, null);
+        }
+
+        try {
+            productDAO.addProduct(name, description, amount);
+            return Body.createResponse(body, OK, MessageUtil.PRODUCT_CREATED, null);
+        } catch(UnableToExecuteStatementException e){
             return Body.createResponse(body, BAD_REQUEST, MessageUtil.PRODUCT_OPERATION_FAILED, null);
         }
     }

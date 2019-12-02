@@ -27,7 +27,7 @@ public interface ProductDAO {
 
     @SqlUpdate("INSERT INTO product(name, description, amount) VALUES (:name, :desc, :amount")
     @GetGeneratedKeys("id")
-    int addProduct(@Bind("name") String name, @Bind("desc") String description, @Bind("amount") int amount);
+    void addProduct(@Bind("name") String name, @Bind("desc") String description, @Bind("amount") int amount);
 
     @SqlUpdate("UPDATE product SET name = :name, SET description = :desc, SET amount = :amount WHERE id = :id")
     void updateProduct(@Bind("name") String name, @Bind("desc") String description,
