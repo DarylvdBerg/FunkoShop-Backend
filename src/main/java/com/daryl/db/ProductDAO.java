@@ -4,7 +4,6 @@ import com.daryl.api.Product;
 import com.daryl.db.mappers.ProductMapper;
 import org.jdbi.v3.sqlobject.config.RegisterRowMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
-import org.jdbi.v3.sqlobject.statement.GetGeneratedKeys;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.statement.SqlUpdate;
 
@@ -26,7 +25,6 @@ public interface ProductDAO {
     List<Product> getAllProducts();
 
     @SqlUpdate("INSERT INTO product(name, description, amount) VALUES (:name, :desc, :amount")
-    @GetGeneratedKeys("id")
     void addProduct(@Bind("name") String name, @Bind("desc") String description, @Bind("amount") int amount);
 
     @SqlUpdate("UPDATE product SET name = :name, SET description = :desc, SET amount = :amount WHERE id = :id")
