@@ -17,4 +17,7 @@ public class MessageUtil {
     // PRODUCT MESSAGES
     public static final String PRODUCT_NOT_FOUND = "Het door jou opgevraagde product is niet gevonden";
     public static final String PRODUCT_FOUND = "Opgevraagde product gevonden";
+    public static final String PRODUCT_DELETED = "Verwijderen van het product is gelukt!";
+    public static final String PRODUCT_UPDATED = "Bijwerken van product is gelukt";
+    public static final String PRODUCT_OPERATION_FAILED = "Bijwerken, aanmaken of verwijderen van product is niet gelukt";
 }
