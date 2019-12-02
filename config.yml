@@ -15,7 +15,7 @@ database:
   password: dbey9j6EAsY4uc4R
 
   # the JDBC URL
-  url: jdbc:postgresql://darylvdberg.nl/funkoshop
+  url: jdbc:postgresql://db.darylvdberg.nl/funkoshop
 
   # any properties specific to your JDBC driver:
   properties:

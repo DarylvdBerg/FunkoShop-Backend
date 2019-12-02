@@ -1,6 +1,7 @@
 package com.daryl.util;
 
 public class MessageUtil {
+    // USER MESSAGES
     public static final String EMAIL_PASS_INVALID_COMBI = "Onjuist Email/Wachtwoord.";
     public static final String EMAIL_NOT_VALID = "Email adres is niet geldig!";
     public static final String PASSWORD_LENGHT_TO_SHORT = "Wachtwoord mag niet kleiner zijn als 6 tekens.";
@@ -12,4 +13,8 @@ public class MessageUtil {
     public static final String PASSWORD_DO_NOT_MATCH = "Wachtwoorden komen niet overeen";
     public static final String USER_NOT_ENOUGH_PRIVILEGE = "Gebruiker heeft niet genoeg rechten";
     public static final String USER_UPDATED = "Gebruiker informatie is bijgewerkt";
+
+    // PRODUCT MESSAGES
+    public static final String PRODUCT_NOT_FOUND = "Het door jou opgevraagde product is niet gevonden";
+    public static final String PRODUCT_FOUND = "Opgevraagde product gevonden";
 }

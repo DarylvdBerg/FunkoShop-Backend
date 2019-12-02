@@ -3,6 +3,7 @@ package com.daryl;
 import com.daryl.api.User;
 import com.daryl.core.JwtAuthenticator;
 import com.daryl.core.JwtHelper;
+import com.daryl.resources.ProductResource;
 import com.daryl.resources.UserResource;
 import com.github.toastshaman.dropwizard.auth.jwt.JwtAuthFilter;
 import io.dropwizard.Application;
@@ -45,6 +46,7 @@ public class FunkoShopApplication extends Application<FunkoShopConfiguration> {
 
         // REGISTER RESOURCES
         environment.jersey().register(new UserResource());
+        environment.jersey().register(new ProductResource());
     }
 
     private void setupJdbiConnection(final Environment environment,
