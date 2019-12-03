@@ -28,9 +28,9 @@ public interface ProductDAO {
     boolean addProduct(@Bind("name") String name, @Bind("desc") String description, @Bind("amount") int amount);
 
     @SqlUpdate("UPDATE product SET name = :name, SET description = :desc, SET amount = :amount WHERE id = :id")
-    void updateProduct(@Bind("name") String name, @Bind("desc") String description,
+    boolean updateProduct(@Bind("name") String name, @Bind("desc") String description,
                        @Bind("amount") int amount, @Bind("id") int id);
 
     @SqlUpdate("DELETE FROM product WHERE id = :id")
-    void deleteProduct(@Bind("id") int id);
+    boolean deleteProduct(@Bind("id") int id);
 }

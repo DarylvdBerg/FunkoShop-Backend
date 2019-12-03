@@ -31,21 +31,13 @@ public class ProductService {
             Body.createResponse(body, Response.Status.NOT_FOUND, MessageUtil.PRODUCT_NOT_FOUND, null);
         }
 
-        body.setStatus(OK);
-        body.setMessage(MessageUtil.PRODUCT_FOUND);
-        body.setContent(product);
-
-        return body.build();
+        return Body.createResponse(body, OK, MessageUtil.PRODUCT_FOUND, product);
     }
 
     public Response getAllProducts(){
         Body body = new Body();
         List<Product> productList = productDAO.getAllProducts();
-
-        body.setStatus(OK);
-        body.setContent(productList);
-
-        return body.build();
+        return Body.createResponse(body, OK, MessageUtil.PRODUCT_FOUND, productList);
     }
 
     public Response updateProduct(User authUser, int id, String name, String description, int amount){
@@ -55,12 +47,11 @@ public class ProductService {
         }
 
         try {
-            productDAO.updateProduct(name, description, amount, id);
-            body.setStatus(OK);
-            body.setMessage(MessageUtil.PRODUCT_UPDATED);
-            return body.build();
+            boolean updated = productDAO.updateProduct(name, description, amount, id);
+            return updated ? Body.createResponse(body, OK, MessageUtil.PRODUCT_UPDATED, null)
+                    : Body.createResponse(body, BAD_REQUEST, MessageUtil.PRODUCT_OPERATION_FAILED, null);
         } catch (UnableToExecuteStatementException e){
-            return Body.createResponse(body, BAD_REQUEST, MessageUtil.PRODUCT_OPERATION_FAILED, null);
+            return Body.createResponse(body, BAD_REQUEST, MessageUtil.PRODUCT_ALREADY_EXIST, null);
         }
     }
 
@@ -76,12 +67,11 @@ public class ProductService {
         }
 
         try {
-            productDAO.deleteProduct(id);
-            body.setStatus(OK);
-            body.setMessage(MessageUtil.PRODUCT_DELETED);
-            return body.build();
+            boolean deleted = productDAO.deleteProduct(id);
+            return deleted ? Body.createResponse(body, OK, MessageUtil.PRODUCT_DELETED, null)
+                    : Body.createResponse(body, BAD_REQUEST, MessageUtil.PRODUCT_OPERATION_FAILED, null);
         } catch (UnableToExecuteStatementException e){
-            return Body.createResponse(body, BAD_REQUEST, MessageUtil.PRODUCT_OPERATION_FAILED, null);
+            return Body.createResponse(body, BAD_REQUEST, MessageUtil.PRODUCT_NOT_FOUND, null);
         }
     }
 
