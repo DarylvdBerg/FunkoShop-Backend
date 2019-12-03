@@ -8,6 +8,7 @@ import com.daryl.resources.UserResource;
 import com.github.toastshaman.dropwizard.auth.jwt.JwtAuthFilter;
 import io.dropwizard.Application;
 import io.dropwizard.auth.AuthDynamicFeature;
+import io.dropwizard.auth.AuthValueFactoryProvider;
 import io.dropwizard.db.DataSourceFactory;
 import io.dropwizard.jdbi3.JdbiFactory;
 import io.dropwizard.setup.Bootstrap;
@@ -70,6 +71,7 @@ public class FunkoShopApplication extends Application<FunkoShopConfiguration> {
                 .setAuthenticator(new JwtAuthenticator())
                 .buildAuthFilter()
         ));
+        environment.jersey().register(new AuthValueFactoryProvider.Binder<>(User.class));
     }
 
 }
