@@ -24,8 +24,8 @@ public interface ProductDAO {
     @SqlQuery("SELECT * FROM product")
     List<Product> getAllProducts();
 
-    @SqlUpdate("INSERT INTO product(name, description, amount) VALUES (:name, :desc, :amount")
-    void addProduct(@Bind("name") String name, @Bind("desc") String description, @Bind("amount") int amount);
+    @SqlUpdate("INSERT INTO product(name, description, amount) VALUES (:name, :desc, :amount);")
+    boolean addProduct(@Bind("name") String name, @Bind("desc") String description, @Bind("amount") int amount);
 
     @SqlUpdate("UPDATE product SET name = :name, SET description = :desc, SET amount = :amount WHERE id = :id")
     void updateProduct(@Bind("name") String name, @Bind("desc") String description,

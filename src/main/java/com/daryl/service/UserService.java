@@ -124,9 +124,9 @@ public class UserService {
 
     private boolean checkUserOldPassword(User authUser, String oldPassword){
         String password = userDAO.getPasswordFromEmail(authUser.getEmail());
-        String hashedPassword = BCrypt.withDefaults().hashToString(COST, oldPassword.toCharArray());
 
-        return hashedPassword.equals(password);
+        BCrypt.Result result = BCrypt.verifyer().verify(oldPassword.toCharArray(), password);
+        return result.validFormat || result.verified;
     }
 
     private boolean checkUserId(User authUser, int id){
