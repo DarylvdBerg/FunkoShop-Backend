@@ -33,9 +33,12 @@ public class ProductResource {
     @Path("/update/{id}")
     @PUT
     public Response updateProduct(@Auth User authUser, @PathParam("id") int id,
-                                  @FormParam("name") @NotNull String name, @FormParam("description") @NotNull String description,
+                                  @FormParam("name") @NotNull String name,
+                                  @FormParam("description") @NotNull String description,
+                                  @FormParam("image") @NotNull String image,
+                                  @FormParam("price") @NotNull double price,
                                   @FormParam("amount") @NotNull int amount){
-        return productService.updateProduct(authUser, id, name, description, amount);
+        return productService.updateProduct(authUser, id, name, description, image, price, amount);
     }
 
     @Path("/delete/{id}")
@@ -48,7 +51,9 @@ public class ProductResource {
     @POST
     public Response addProduct(@Auth User authUser, @FormParam("name") @NotNull String name,
                                @FormParam("description") @NotNull String description,
+                               @FormParam("image") @NotNull String image,
+                               @FormParam("price") @NotNull double price,
                                @FormParam("amount") @NotNull int amount){
-        return productService.addProduct(authUser, name, description, amount);
+        return productService.addProduct(authUser, name, description, image, price, amount);
     }
 }

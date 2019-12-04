@@ -40,14 +40,14 @@ public class ProductService {
         return Body.createResponse(body, OK, MessageUtil.PRODUCT_FOUND, productList);
     }
 
-    public Response updateProduct(User authUser, int id, String name, String description, int amount){
+    public Response updateProduct(User authUser, int id, String name, String description, String image, double price, int amount){
         Body body = new Body();
         if(!PrivilegeUtil.checkPrivilege(authUser, PrivilegeUtil.UPDATE_PRODUCT)){
             return Body.createResponse(body, UNAUTHORIZED, MessageUtil.USER_NOT_ENOUGH_PRIVILEGE, null);
         }
 
         try {
-            boolean updated = productDAO.updateProduct(name, description, amount, id);
+            boolean updated = productDAO.updateProduct(name, description, amount, image, price, id);
             return updated ? Body.createResponse(body, OK, MessageUtil.PRODUCT_UPDATED, null)
                     : Body.createResponse(body, BAD_REQUEST, MessageUtil.PRODUCT_OPERATION_FAILED, null);
         } catch (UnableToExecuteStatementException e){
@@ -75,14 +75,14 @@ public class ProductService {
         }
     }
 
-    public Response addProduct(User authUser, String name, String description, int amount) {
+    public Response addProduct(User authUser, String name, String description, String image, double price, int amount) {
         Body body = new Body();
         if(!PrivilegeUtil.checkPrivilege(authUser, PrivilegeUtil.ADD_PRODUCT)){
             return Body.createResponse(body, UNAUTHORIZED, MessageUtil.USER_NOT_ENOUGH_PRIVILEGE, null);
         }
 
         try {
-            boolean added = productDAO.addProduct(name, description, amount);
+            boolean added = productDAO.addProduct(name, description, image, price, amount);
             return added ? Body.createResponse(body, OK, MessageUtil.PRODUCT_CREATED, null) :
                     Body.createResponse(body, BAD_REQUEST, MessageUtil.PRODUCT_OPERATION_FAILED, null);
         } catch (UnableToExecuteStatementException e){

@@ -15,6 +15,8 @@ public interface ProductDAO {
             "id SERIAL PRIMARY KEY,"+
             "name VARCHAR(256) UNIQUE NOT NULL,"+
             "description VARCHAR(256) NOT NULL,"+
+            "imagePath VARCHAR(256) NOT NULL,"+
+            "price DOUBLE NOT NULL,"+
             "amount INT NOT NULL);")
     void createTable();
 
@@ -24,12 +26,20 @@ public interface ProductDAO {
     @SqlQuery("SELECT * FROM product")
     List<Product> getAllProducts();
 
-    @SqlUpdate("INSERT INTO product(name, description, amount) VALUES (:name, :desc, :amount);")
-    boolean addProduct(@Bind("name") String name, @Bind("desc") String description, @Bind("amount") int amount);
+    @SqlUpdate("INSERT INTO product(name, description, imagePath, price, amount) VALUES (:name, :desc, :image, :price :amount);")
+    boolean addProduct(@Bind("name") String name,
+                       @Bind("desc") String description,
+                       @Bind("image") String image,
+                       @Bind("price") double price,
+                       @Bind("amount") int amount);
 
-    @SqlUpdate("UPDATE product SET name = :name, SET description = :desc, SET amount = :amount WHERE id = :id")
+    @SqlUpdate("UPDATE product SET name = :name, SET description = :desc, SET image = :image, " +
+            "SET price = :price SET amount = :amount WHERE id = :id")
     boolean updateProduct(@Bind("name") String name, @Bind("desc") String description,
-                       @Bind("amount") int amount, @Bind("id") int id);
+                          @Bind("amount") int amount,
+                          @Bind("image") String image,
+                          @Bind("price") double price,
+                          @Bind("id") int id);
 
     @SqlUpdate("DELETE FROM product WHERE id = :id")
     boolean deleteProduct(@Bind("id") int id);

@@ -4,6 +4,8 @@ public class Product {
     private int id;
     private String name;
     private String description;
+    private String imagePath;
+    private double price;
     private int amount;
 
     public Product(int id, String name, String description, int amount){
