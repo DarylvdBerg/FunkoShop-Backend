@@ -16,7 +16,7 @@ public interface ProductDAO {
             "name VARCHAR(256) UNIQUE NOT NULL,"+
             "description VARCHAR(256) NOT NULL,"+
             "imagePath VARCHAR(256) NOT NULL,"+
-            "price DOUBLE NOT NULL,"+
+            "price NUMERIC(11,2) NOT NULL,"+
             "amount INT NOT NULL);")
     void createTable();
 
@@ -26,7 +26,7 @@ public interface ProductDAO {
     @SqlQuery("SELECT * FROM product")
     List<Product> getAllProducts();
 
-    @SqlUpdate("INSERT INTO product(name, description, imagePath, price, amount) VALUES (:name, :desc, :image, :price :amount);")
+    @SqlUpdate("INSERT INTO product(name, description, imagePath, price, amount) VALUES (:name, :desc, :image, :price, :amount);")
     boolean addProduct(@Bind("name") String name,
                        @Bind("desc") String description,
                        @Bind("image") String image,

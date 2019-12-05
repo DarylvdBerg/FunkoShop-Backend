@@ -86,6 +86,7 @@ public class ProductService {
             return added ? Body.createResponse(body, OK, MessageUtil.PRODUCT_CREATED, null) :
                     Body.createResponse(body, BAD_REQUEST, MessageUtil.PRODUCT_OPERATION_FAILED, null);
         } catch (UnableToExecuteStatementException e){
+            e.printStackTrace();
             return Body.createResponse(body, BAD_REQUEST, MessageUtil.PRODUCT_ALREADY_EXIST, null);
         }
 
