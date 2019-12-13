@@ -22,4 +22,8 @@ public class MessageUtil {
     public static final String PRODUCT_OPERATION_FAILED = "Bijwerken, aanmaken of verwijderen van product is niet gelukt";
     public static final String PRODUCT_CREATED = "Product is aangemaakt";
     public static final String PRODUCT_ALREADY_EXIST = "Het product wat u wilt toevoegen bestaat al";
+    public static final String FAILED_TO_UPLOAD_IMAGE = "Uploaden van het plaatje is niet gelukt en is wel verplicht, probeer het opnieuw";
+
+    // GLOBAL
+    public static final String SOMETHING_WENT_WRONG = "Er is iets fout gegaan, probeer het later opnieuw.";
 }

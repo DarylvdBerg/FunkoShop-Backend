@@ -13,9 +13,22 @@ public class FunkoShopConfiguration extends Configuration {
     @NotNull
     private String jwtSecret;
 
+    @NotNull
+    private String uploadDir;
+
     @Valid
     @NotNull
     private DataSourceFactory database = new DataSourceFactory();
+
+    @JsonProperty("uploadDirectory")
+    public String getUploadDir(){
+        return uploadDir;
+    }
+
+    @JsonProperty("uploadDirectory")
+    public void setUploadDir(String uploadDir){
+        this.uploadDir = uploadDir;
+    }
 
     @JsonProperty("jwtSecret")
     public byte[] getJwtSecret() {

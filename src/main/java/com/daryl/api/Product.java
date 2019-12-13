@@ -8,10 +8,12 @@ public class Product {
     private double price;
     private int amount;
 
-    public Product(int id, String name, String description, int amount){
+    public Product(int id, String name, String description, String imagePath, double price, int amount){
         this.id = id;
         this.name = name;
         this.description = description;
+        this.imagePath = imagePath;
+        this.price = price;
         this.amount = amount;
     }
 
@@ -33,6 +35,22 @@ public class Product {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
     }
 
     public String getDescription() {

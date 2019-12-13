@@ -5,18 +5,26 @@ import com.daryl.core.JwtAuthenticator;
 import com.daryl.core.JwtHelper;
 import com.daryl.resources.ProductResource;
 import com.daryl.resources.UserResource;
+import com.daryl.service.ImageService;
 import com.github.toastshaman.dropwizard.auth.jwt.JwtAuthFilter;
 import io.dropwizard.Application;
 import io.dropwizard.auth.AuthDynamicFeature;
 import io.dropwizard.auth.AuthValueFactoryProvider;
 import io.dropwizard.db.DataSourceFactory;
+import io.dropwizard.forms.MultiPartBundle;
 import io.dropwizard.jdbi3.JdbiFactory;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
+import org.eclipse.jetty.servlet.ServletHolder;
+import org.glassfish.jersey.media.multipart.MultiPartFeature;
+import org.glassfish.jersey.server.ServerProperties;
+import org.glassfish.jersey.servlet.ServletContainer;
 import org.jdbi.v3.core.Jdbi;
 import org.jose4j.jwt.consumer.JwtConsumer;
 import org.jose4j.jwt.consumer.JwtConsumerBuilder;
 import org.jose4j.keys.HmacKey;
+
+import java.io.File;
 
 public class FunkoShopApplication extends Application<FunkoShopConfiguration> {
 
@@ -33,7 +41,7 @@ public class FunkoShopApplication extends Application<FunkoShopConfiguration> {
 
     @Override
     public void initialize(final Bootstrap<FunkoShopConfiguration> bootstrap) {
-
+        bootstrap.addBundle(new MultiPartBundle());
     }
 
     @Override
@@ -41,6 +49,7 @@ public class FunkoShopApplication extends Application<FunkoShopConfiguration> {
                     final Environment environment) {
         registerJwtAuthentication(configuration, environment);
         setupJdbiConnection(environment, configuration.getDatabase());
+        createUploadDir(configuration, environment);
 
         //Set jwtSecret
         JwtHelper.jwtSecret = configuration.getJwtSecret();
@@ -51,9 +60,18 @@ public class FunkoShopApplication extends Application<FunkoShopConfiguration> {
     }
 
     private void setupJdbiConnection(final Environment environment,
-                                      DataSourceFactory dataSourceFactory){
+                                     DataSourceFactory dataSourceFactory){
         final JdbiFactory jdbiFactory = new JdbiFactory();
         jdbiCon = jdbiFactory.build(environment, dataSourceFactory, "postgresql");
+    }
+
+    private void createUploadDir(final FunkoShopConfiguration configuration, final Environment environment){
+        File dir = new File(configuration.getUploadDir());
+        if(!dir.exists()){
+            dir.mkdirs();
+        }
+        environment.jersey().register(new ImageService(configuration.getUploadDir()));
+
     }
 
     private void registerJwtAuthentication(final FunkoShopConfiguration configuration, final Environment environment){

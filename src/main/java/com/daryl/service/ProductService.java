@@ -7,10 +7,14 @@ import com.daryl.core.Body;
 import com.daryl.db.ProductDAO;
 import com.daryl.util.MessageUtil;
 import com.daryl.util.PrivilegeUtil;
+import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.jdbi.v3.core.statement.UnableToExecuteStatementException;
 
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
 
+import java.io.File;
+import java.io.InputStream;
 import java.util.List;
 
 import static javax.ws.rs.core.Response.Status.*;
@@ -28,10 +32,11 @@ public class ProductService {
         Product product = productDAO.getProduct(id);
 
         if(product == null){
-            Body.createResponse(body, Response.Status.NOT_FOUND, MessageUtil.PRODUCT_NOT_FOUND, null);
+            return Body.createResponse(body, Response.Status.NOT_FOUND, MessageUtil.PRODUCT_NOT_FOUND, null);
         }
 
-        return Body.createResponse(body, OK, MessageUtil.PRODUCT_FOUND, product);
+        return Body.createResponseWithHeader(body, OK, MessageUtil.PRODUCT_FOUND, product,
+                HttpHeaders.CONTENT_DISPOSITION, String.format("attachment; filename=\"%s\"", product.getImagePath()));
     }
 
     public Response getAllProducts(){
@@ -75,20 +80,29 @@ public class ProductService {
         }
     }
 
-    public Response addProduct(User authUser, String name, String description, String image, double price, int amount) {
+    public Response addProduct(User authUser, String name, String description, InputStream image, double price, int amount, FormDataContentDisposition imageDetail) {
         Body body = new Body();
         if(!PrivilegeUtil.checkPrivilege(authUser, PrivilegeUtil.ADD_PRODUCT)){
             return Body.createResponse(body, UNAUTHORIZED, MessageUtil.USER_NOT_ENOUGH_PRIVILEGE, null);
         }
 
         try {
-            boolean added = productDAO.addProduct(name, description, image, price, amount);
-            return added ? Body.createResponse(body, OK, MessageUtil.PRODUCT_CREATED, null) :
-                    Body.createResponse(body, BAD_REQUEST, MessageUtil.PRODUCT_OPERATION_FAILED, null);
+            String imagePath = handleFileUpload(image, imageDetail);
+            if(imagePath != null){
+                boolean added = productDAO.addProduct(name, description, imagePath, price, amount);
+                return added ? Body.createResponse(body, OK, MessageUtil.PRODUCT_CREATED, null) :
+                        Body.createResponse(body, BAD_REQUEST, MessageUtil.PRODUCT_OPERATION_FAILED, null);
+            } else {
+                return Body.createResponse(body, INTERNAL_SERVER_ERROR, MessageUtil.SOMETHING_WENT_WRONG, null);
+            }
         } catch (UnableToExecuteStatementException e){
             e.printStackTrace();
             return Body.createResponse(body, BAD_REQUEST, MessageUtil.PRODUCT_ALREADY_EXIST, null);
         }
 
+    }
+
+    private String handleFileUpload(InputStream file, FormDataContentDisposition imageDetail){
+        return ImageService.getInstance().uploadImage(file, imageDetail);
     }
 }
