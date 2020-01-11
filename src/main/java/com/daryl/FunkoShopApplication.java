@@ -1,8 +1,10 @@
 package com.daryl;
 
 import com.daryl.api.User;
+import com.daryl.config.ImageConfig;
 import com.daryl.core.JwtAuthenticator;
 import com.daryl.core.JwtHelper;
+import com.daryl.resources.ImageResource;
 import com.daryl.resources.ProductResource;
 import com.daryl.resources.UserResource;
 import com.daryl.service.ImageService;
@@ -15,16 +17,10 @@ import io.dropwizard.forms.MultiPartBundle;
 import io.dropwizard.jdbi3.JdbiFactory;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
-import org.eclipse.jetty.servlet.ServletHolder;
-import org.glassfish.jersey.media.multipart.MultiPartFeature;
-import org.glassfish.jersey.server.ServerProperties;
-import org.glassfish.jersey.servlet.ServletContainer;
 import org.jdbi.v3.core.Jdbi;
 import org.jose4j.jwt.consumer.JwtConsumer;
 import org.jose4j.jwt.consumer.JwtConsumerBuilder;
 import org.jose4j.keys.HmacKey;
-
-import java.io.File;
 
 public class FunkoShopApplication extends Application<FunkoShopConfiguration> {
 
@@ -49,12 +45,12 @@ public class FunkoShopApplication extends Application<FunkoShopConfiguration> {
                     final Environment environment) {
         registerJwtAuthentication(configuration, environment);
         setupJdbiConnection(environment, configuration.getDatabase());
-        createUploadDir(configuration, environment);
 
         //Set jwtSecret
         JwtHelper.jwtSecret = configuration.getJwtSecret();
 
         // REGISTER RESOURCES
+        registerImageResource(environment, configuration.getImageConfig());
         environment.jersey().register(new UserResource());
         environment.jersey().register(new ProductResource());
     }
@@ -63,15 +59,6 @@ public class FunkoShopApplication extends Application<FunkoShopConfiguration> {
                                      DataSourceFactory dataSourceFactory){
         final JdbiFactory jdbiFactory = new JdbiFactory();
         jdbiCon = jdbiFactory.build(environment, dataSourceFactory, "postgresql");
-    }
-
-    private void createUploadDir(final FunkoShopConfiguration configuration, final Environment environment){
-        File dir = new File(configuration.getUploadDir());
-        if(!dir.exists()){
-            dir.mkdirs();
-        }
-        environment.jersey().register(new ImageService(configuration.getUploadDir()));
-
     }
 
     private void registerJwtAuthentication(final FunkoShopConfiguration configuration, final Environment environment){
@@ -90,6 +77,13 @@ public class FunkoShopApplication extends Application<FunkoShopConfiguration> {
                 .buildAuthFilter()
         ));
         environment.jersey().register(new AuthValueFactoryProvider.Binder<>(User.class));
+    }
+
+    private void registerImageResource(Environment environment, ImageConfig config) {
+        ImageService imageService = new ImageService(config);
+        ImageResource imageResource = new ImageResource(imageService);
+
+        environment.jersey().register(imageResource);
     }
 
 }

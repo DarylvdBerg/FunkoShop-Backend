@@ -4,6 +4,7 @@ import com.daryl.api.Product;
 import com.daryl.db.mappers.ProductMapper;
 import org.jdbi.v3.sqlobject.config.RegisterRowMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
+import org.jdbi.v3.sqlobject.statement.GetGeneratedKeys;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.statement.SqlUpdate;
 
@@ -15,7 +16,6 @@ public interface ProductDAO {
             "id SERIAL PRIMARY KEY,"+
             "name VARCHAR(256) UNIQUE NOT NULL,"+
             "description VARCHAR(256) NOT NULL,"+
-            "imagePath VARCHAR(256) NOT NULL,"+
             "price NUMERIC(11,2) NOT NULL,"+
             "amount INT NOT NULL);")
     void createTable();
@@ -26,18 +26,17 @@ public interface ProductDAO {
     @SqlQuery("SELECT * FROM product")
     List<Product> getAllProducts();
 
-    @SqlUpdate("INSERT INTO product(name, description, imagePath, price, amount) VALUES (:name, :desc, :image, :price, :amount);")
-    boolean addProduct(@Bind("name") String name,
+    @SqlUpdate("INSERT INTO product(name, description, price, amount) VALUES (:name, :desc, :price, :amount);")
+    @GetGeneratedKeys("id")
+    int addProduct(@Bind("name") String name,
                        @Bind("desc") String description,
-                       @Bind("image") String image,
                        @Bind("price") double price,
                        @Bind("amount") int amount);
 
-    @SqlUpdate("UPDATE product SET name = :name, SET description = :desc, SET image = :image, " +
+    @SqlUpdate("UPDATE product SET name = :name, SET description = :desc" +
             "SET price = :price SET amount = :amount WHERE id = :id")
     boolean updateProduct(@Bind("name") String name, @Bind("desc") String description,
                           @Bind("amount") int amount,
-                          @Bind("image") String image,
                           @Bind("price") double price,
                           @Bind("id") int id);
 
