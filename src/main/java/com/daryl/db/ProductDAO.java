@@ -25,7 +25,7 @@ public interface ProductDAO {
     @SqlQuery("SELECT * FROM product")
     List<Product> getAllProducts();
 
-    @SqlUpdate("INSERT INTO product(name, description, price, amount) VALUES (:name, :desc, :price);")
+    @SqlUpdate("INSERT INTO product(name, description, price) VALUES (:name, :desc, :price);")
     @GetGeneratedKeys("id")
     int addProduct(@Bind("name") String name,
                        @Bind("desc") String description,
