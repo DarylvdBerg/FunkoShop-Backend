@@ -16,8 +16,7 @@ public interface ProductDAO {
             "id SERIAL PRIMARY KEY,"+
             "name VARCHAR(256) UNIQUE NOT NULL,"+
             "description VARCHAR(256) NOT NULL,"+
-            "price NUMERIC(11,2) NOT NULL,"+
-            "amount INT NOT NULL);")
+            "price NUMERIC(11,2) NOT NULL);")
     void createTable();
 
     @SqlQuery("SELECT * FROM product WHERE id = :id")
@@ -26,17 +25,15 @@ public interface ProductDAO {
     @SqlQuery("SELECT * FROM product")
     List<Product> getAllProducts();
 
-    @SqlUpdate("INSERT INTO product(name, description, price, amount) VALUES (:name, :desc, :price, :amount);")
+    @SqlUpdate("INSERT INTO product(name, description, price, amount) VALUES (:name, :desc, :price);")
     @GetGeneratedKeys("id")
     int addProduct(@Bind("name") String name,
                        @Bind("desc") String description,
-                       @Bind("price") double price,
-                       @Bind("amount") int amount);
+                       @Bind("price") double price);
 
     @SqlUpdate("UPDATE product SET name = :name, SET description = :desc" +
-            "SET price = :price SET amount = :amount WHERE id = :id")
+            "SET price = :price WHERE id = :id")
     boolean updateProduct(@Bind("name") String name, @Bind("desc") String description,
-                          @Bind("amount") int amount,
                           @Bind("price") double price,
                           @Bind("id") int id);
 

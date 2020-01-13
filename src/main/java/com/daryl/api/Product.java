@@ -11,14 +11,12 @@ public class Product {
     private String description;
     private ArrayList<Image> images;
     private double price;
-    private int amount;
 
-    public Product(int id, String name, String description, double price, int amount){
+    public Product(int id, String name, String description, double price){
         this.id = id;
         this.name = name;
         this.description = description;
         this.price = price;
-        this.amount = amount;
     }
 
     public Product(){
@@ -63,13 +61,5 @@ public class Product {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public int getAmount() {
-        return amount;
-    }
-
-    public void setAmount(int amount) {
-        this.amount = amount;
     }
 }
