@@ -31,8 +31,8 @@ public interface ProductDAO {
                        @Bind("desc") String description,
                        @Bind("price") double price);
 
-    @SqlUpdate("UPDATE product SET name = :name, SET description = :desc," +
-            "SET price = :price WHERE id = :id")
+    @SqlUpdate("UPDATE product SET name = :name, description = :desc," +
+            "price = :price WHERE id = :id")
     boolean updateProduct(@Bind("name") String name, @Bind("desc") String description,
                           @Bind("price") double price,
                           @Bind("id") int id);
