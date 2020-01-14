@@ -31,6 +31,18 @@ public class MessageUtil {
     public static final String IMAGE_UPLOADED = "Afbeelding(en) zijn opgeslagen!";
     public static final String IMAGE_DELETED = "Afbeedling is verwijderd!";
 
+    // ORDER MESSAGES
+    public static final String ORDERS_FOUND = "Bestellingen opgehaald";
+    public static final String ORDER_CREATED = "Bestelling geplaats!";
+    public static final String ORDER_CREATED_FAILED = "Plaatsen van de bestelling is niet gelukt";
+
+    // USER ADDRESS MESSAGES
+    public static final String ADDRESS_FOUND = "Adres gevonden!";
+    public static final String ADDRESS_CREATED = "Adres is opgeslagen";
+    public static final String ADDRESS_NOT_CREATED = "Adres is niet opgeslagen";
+    public static final String ADDRESS_UPDATED = "Adres is aangepast";
+    public static final String ADDRESS_NOT_UPDATED = "Adres is niet aangepast";
+
     // GLOBAL
     public static final String SOMETHING_WENT_WRONG = "Er is iets fout gegaan, probeer het later opnieuw.";
 }

@@ -4,9 +4,7 @@ import com.daryl.api.User;
 import com.daryl.config.ImageConfig;
 import com.daryl.core.JwtAuthenticator;
 import com.daryl.core.JwtHelper;
-import com.daryl.resources.ImageResource;
-import com.daryl.resources.ProductResource;
-import com.daryl.resources.UserResource;
+import com.daryl.resources.*;
 import com.daryl.service.ImageService;
 import com.github.toastshaman.dropwizard.auth.jwt.JwtAuthFilter;
 import io.dropwizard.Application;
@@ -53,6 +51,8 @@ public class FunkoShopApplication extends Application<FunkoShopConfiguration> {
         registerImageResource(environment, configuration.getImageConfig());
         environment.jersey().register(new UserResource());
         environment.jersey().register(new ProductResource());
+        environment.jersey().register(new OrderResource());
+        environment.jersey().register(new UserAddressResource());
     }
 
     private void setupJdbiConnection(final Environment environment,
