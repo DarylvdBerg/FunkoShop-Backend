@@ -13,8 +13,8 @@ import java.util.ArrayList;
 public interface OrderDAO {
     @SqlUpdate("CREATE TABLE IF NOT EXISTS user_orders (" +
             "id SERIAL PRIMARY KEY," +
-            "product_id SERIAL," +
-            "user_id SERIAL," +
+            "product_id INT," +
+            "user_id INT," +
             "order_date TIMESTAMP DEFAULT NOW() NOT NULL," +
             "FOREIGN KEY(product_id) REFERENCES product(id) ON DELETE CASCADE," +
             "FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE);")

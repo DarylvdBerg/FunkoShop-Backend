@@ -12,7 +12,7 @@ public interface UserAddressDAO {
 
     @SqlUpdate("CREATE TABLE IF NOT EXISTS user_address (" +
             "id SERIAL PRIMARY KEY," +
-            "user_id SERIAL," +
+            "user_id INT," +
             "street_address VARCHAR(64) NOT NULL," +
             "zip_code VARCHAR(6) NOT NULL," +
             "district VARCHAR(64) NOT NULL," +

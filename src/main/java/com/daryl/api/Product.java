@@ -1,8 +1,5 @@
 package com.daryl.api;
 
-import com.daryl.core.Image;
-
-import java.io.File;
 import java.util.ArrayList;
 
 public class Product {
