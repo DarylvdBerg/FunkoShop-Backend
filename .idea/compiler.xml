@@ -9,5 +9,9 @@
         <module name="FunkoShop-Backend" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="FunkoShop" target="8" />
+      <module name="FunkoShop-B" target="8" />
+    </bytecodeTargetLevel>
   </component>
 </project>

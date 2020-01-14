@@ -1,5 +1,6 @@
 package com.daryl;
 
+import com.daryl.config.ImageConfig;
 import io.dropwizard.Configuration;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.dropwizard.db.DataSourceFactory;
@@ -12,6 +13,10 @@ public class FunkoShopConfiguration extends Configuration {
 
     @NotNull
     private String jwtSecret;
+
+    @Valid
+    @NotNull
+    public ImageConfig imageConfig;
 
     @Valid
     @NotNull
@@ -36,4 +41,15 @@ public class FunkoShopConfiguration extends Configuration {
     public void setDatabase(DataSourceFactory database) {
         this.database = database;
     }
+
+    @JsonProperty("images")
+    public ImageConfig getImageConfig() {
+        return this.imageConfig;
+    }
+
+    @JsonProperty("images")
+    public void setImageConfig(ImageConfig imageConfig) {
+        this.imageConfig = imageConfig;
+    }
+
 }

@@ -4,6 +4,13 @@ logging:
     IPRWC: DEBUG
 
 jwtSecret: "!sKC$JbMQe366WqyCsnt6CP+rvg#yc#W7Br#ju+54_-Yg4%?Um+Rm-4&AZndtE^=2U=$^9Y%HQ@aac8DuJH2##zuu6#TLu8CkcdcZyaXL%QyzZr4y^*_*DckXB-3NvS*NQwdy=Y8tH2cbh@uzNh%D#QGTQv#ZGh5EKyq=Y&WvbA4&w334V-_Umqk-L$#yzuYUMMeCNZ3L*jTw$a3tLnCR%znD_8v&TF7tu@SGApcGW3Ls*bTw@MnnyWfdurZr#q_"
+
+images:
+  saveFolder: "assets/"
+  allowedMimeTypes:
+    - "image/jpeg"
+    - "image/png"
+
 database:
   # the name of your JDBC driver
   driverClass: org.postgresql.Driver
@@ -15,7 +22,7 @@ database:
   password: dbey9j6EAsY4uc4R
 
   # the JDBC URL
-  url: jdbc:postgresql://darylvdberg.nl/funkoshop
+  url: jdbc:postgresql://db.darylvdberg.nl/funkoshop
 
   # any properties specific to your JDBC driver:
   properties:

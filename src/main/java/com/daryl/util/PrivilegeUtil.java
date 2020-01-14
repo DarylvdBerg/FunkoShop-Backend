@@ -7,10 +7,6 @@ import com.daryl.api.User;
  */
 public class PrivilegeUtil {
 
-    public static boolean checkPrivilege(User user, int privilege){
-        return user.getPrivilege() >= privilege;
-    }
-
     // REGULAR USER
     public static final int CHANGE_PASSWORD = 0;
     public static final int UPDATE_USER_INFO = 0;
@@ -27,4 +23,8 @@ public class PrivilegeUtil {
     public static final int DELETE_USER = 2;
     public static final int SEE_ALL_TRANSACTIONS = 2;
     public static final int UPDATE_USER_PRIVILEGE = 2;
+
+    public static boolean checkPrivilege(User user, int privilege){
+        return user.getPrivilege() >= privilege;
+    }
 }

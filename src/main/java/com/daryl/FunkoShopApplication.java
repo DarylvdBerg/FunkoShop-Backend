@@ -1,13 +1,19 @@
 package com.daryl;
 
 import com.daryl.api.User;
+import com.daryl.config.ImageConfig;
 import com.daryl.core.JwtAuthenticator;
 import com.daryl.core.JwtHelper;
+import com.daryl.resources.ImageResource;
+import com.daryl.resources.ProductResource;
 import com.daryl.resources.UserResource;
+import com.daryl.service.ImageService;
 import com.github.toastshaman.dropwizard.auth.jwt.JwtAuthFilter;
 import io.dropwizard.Application;
 import io.dropwizard.auth.AuthDynamicFeature;
+import io.dropwizard.auth.AuthValueFactoryProvider;
 import io.dropwizard.db.DataSourceFactory;
+import io.dropwizard.forms.MultiPartBundle;
 import io.dropwizard.jdbi3.JdbiFactory;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
@@ -31,7 +37,7 @@ public class FunkoShopApplication extends Application<FunkoShopConfiguration> {
 
     @Override
     public void initialize(final Bootstrap<FunkoShopConfiguration> bootstrap) {
-
+        bootstrap.addBundle(new MultiPartBundle());
     }
 
     @Override
@@ -44,11 +50,13 @@ public class FunkoShopApplication extends Application<FunkoShopConfiguration> {
         JwtHelper.jwtSecret = configuration.getJwtSecret();
 
         // REGISTER RESOURCES
+        registerImageResource(environment, configuration.getImageConfig());
         environment.jersey().register(new UserResource());
+        environment.jersey().register(new ProductResource());
     }
 
     private void setupJdbiConnection(final Environment environment,
-                                      DataSourceFactory dataSourceFactory){
+                                     DataSourceFactory dataSourceFactory){
         final JdbiFactory jdbiFactory = new JdbiFactory();
         jdbiCon = jdbiFactory.build(environment, dataSourceFactory, "postgresql");
     }
@@ -68,6 +76,14 @@ public class FunkoShopApplication extends Application<FunkoShopConfiguration> {
                 .setAuthenticator(new JwtAuthenticator())
                 .buildAuthFilter()
         ));
+        environment.jersey().register(new AuthValueFactoryProvider.Binder<>(User.class));
+    }
+
+    private void registerImageResource(Environment environment, ImageConfig config) {
+        ImageService imageService = new ImageService(config);
+        ImageResource imageResource = new ImageResource(imageService);
+
+        environment.jersey().register(imageResource);
     }
 
 }
