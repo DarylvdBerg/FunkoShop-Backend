@@ -1,7 +1,5 @@
 package com.daryl.api;
 
-import org.joda.time.DateTime;
-
 import java.sql.Timestamp;
 
 public class Order {
@@ -43,11 +41,11 @@ public class Order {
         this.productName = productName;
     }
 
-    public Timestamp getOrder_date() {
+    public Timestamp getOrderDate() {
         return orderDate;
     }
 
-    public void setOrder_date(Timestamp order_date) {
-        this.orderDate = order_date;
+    public void setOrderDate(Timestamp orderDate) {
+        this.orderDate = orderDate;
     }
 }

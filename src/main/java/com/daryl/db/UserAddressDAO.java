@@ -19,9 +19,9 @@ public interface UserAddressDAO {
             "FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE);")
     void createTable();
 
-    @SqlUpdate("INSERT INTO user_address " +
+    @SqlUpdate("INSERT INTO user_address(user_id, street_address, zip_code, district) " +
             "VALUES(:user_id, :street_address, :zip_code, :district)")
-    boolean create(@Bind("user_id") int id, @Bind("street_name") String streetName,
+    boolean create(@Bind("user_id") int id, @Bind("street_address") String streetAddress,
                    @Bind("zip_code") String zipCode,
                    @Bind("district") String district);
 

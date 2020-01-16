@@ -21,7 +21,7 @@ public class UserAddressResource {
     @Path("/create")
     @POST
     public Response createUserAddress(@FormParam("user_id") @NotNull int userId,
-                                      @FormParam("street_name") @NotNull String streetName,
+                                      @FormParam("street_address") @NotNull String streetName,
                                       @FormParam("zip_code") @NotNull String zipCode,
                                       @FormParam("district") @NotNull String district) {
         return this.userAddressSerivce.createUserAddress(userId, streetName, zipCode, district);

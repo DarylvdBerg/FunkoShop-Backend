@@ -19,10 +19,10 @@ public class UserAddressSerivce {
         this.userAddressDAO.createTable();
     }
 
-    public Response createUserAddress(int userId, String streetName, String zipCode, String district) {
+    public Response createUserAddress(int userId, String streetAddress, String zipCode, String district) {
         Body body = new Body();
         try {
-            boolean created = this.userAddressDAO.create(userId, streetName, zipCode, district);
+            boolean created = this.userAddressDAO.create(userId, streetAddress, zipCode, district);
             return created ? Body.createResponse(body, Response.Status.OK, MessageUtil.ADDRESS_CREATED, null) :
                     Body.createResponse(body, Response.Status.BAD_REQUEST, MessageUtil.ADDRESS_NOT_CREATED, null);
         } catch(UnableToExecuteStatementException e){

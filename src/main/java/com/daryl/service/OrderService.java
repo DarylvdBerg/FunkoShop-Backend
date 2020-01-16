@@ -1,6 +1,7 @@
 package com.daryl.service;
 
 import com.daryl.FunkoShopApplication;
+import com.daryl.api.Cart;
 import com.daryl.api.Order;
 import com.daryl.api.User;
 import com.daryl.core.Body;
@@ -11,6 +12,7 @@ import org.jdbi.v3.core.statement.UnableToExecuteStatementException;
 
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
+import java.util.List;
 
 public class OrderService {
     private OrderDAO orderDAO;
@@ -31,6 +33,7 @@ public class OrderService {
             ArrayList<Order> orders = orderDAO.getOrders();
             return Body.createResponse(body, Response.Status.OK, MessageUtil.ORDERS_FOUND, orders);
         } catch (UnableToExecuteStatementException e) {
+            e.printStackTrace();
             return Body.createResponse(body, Response.Status.BAD_REQUEST, MessageUtil.SOMETHING_WENT_WRONG, null);
         }
     }
@@ -48,10 +51,13 @@ public class OrderService {
         }
     }
 
-    public Response createOrder(int product_id, int user_id) {
+    public Response createOrder(List<Cart> cartList) {
         Body body = new Body();
+        boolean created = false;
         try {
-            boolean created = orderDAO.createOrder(product_id, user_id);
+            for(Cart cart: cartList) {
+                created = this.orderDAO.createOrder(cart.getProductId(), cart.getUserId());
+            }
             return created ? Body.createResponse(body, Response.Status.OK, MessageUtil.ORDER_CREATED, null) :
                     Body.createResponse(body, Response.Status.BAD_REQUEST, MessageUtil.ORDER_CREATED_FAILED, null);
         } catch (UnableToExecuteStatementException e) {

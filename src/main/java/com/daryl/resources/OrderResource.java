@@ -1,12 +1,16 @@
 package com.daryl.resources;
 
+import com.daryl.api.Cart;
 import com.daryl.api.User;
 import com.daryl.service.OrderService;
 import io.dropwizard.auth.Auth;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.List;
 
 @Path("/order")
 @Produces(MediaType.APPLICATION_JSON)
@@ -19,10 +23,9 @@ public class OrderResource {
 
     @Path("/create")
     @POST
-    public Response createOrder(@Auth User authUser,
-                                @FormParam("product_id") int product_id,
-                                @FormParam("user_id") int user_id) {
-       return orderService.createOrder(product_id, user_id);
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response createOrder(@Auth User authUser, @Valid @NotNull List<Cart> cartItems) {
+       return orderService.createOrder(cartItems);
     }
 
     @Path("/all")
