@@ -126,7 +126,7 @@ public class UserService {
         String password = userDAO.getPasswordFromEmail(authUser.getEmail());
 
         BCrypt.Result result = BCrypt.verifyer().verify(oldPassword.toCharArray(), password);
-        return result.validFormat || result.verified;
+        return result.validFormat && result.verified;
     }
 
     private boolean checkUserId(User authUser, int id){
