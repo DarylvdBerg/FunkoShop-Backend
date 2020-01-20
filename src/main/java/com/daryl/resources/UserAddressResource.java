@@ -31,10 +31,10 @@ public class UserAddressResource {
     @PUT
     public Response updateUserAddress(@Auth User authUser,
                                       @PathParam("id") int userId,
-                                      @FormParam("street_name") String streetName,
+                                      @FormParam("street_address") String streetAddress,
                                       @FormParam("zip_code") String zipCode,
                                       @FormParam("district") String district){
-        return this.userAddressSerivce.updateUserAddress(authUser, userId, streetName, zipCode, district);
+        return this.userAddressSerivce.updateUserAddress(authUser, userId, streetAddress, zipCode, district);
     }
 
     @Path("/{id}")

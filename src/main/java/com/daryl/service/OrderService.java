@@ -26,7 +26,7 @@ public class OrderService {
         Body body = new Body();
 
         if(!PrivilegeUtil.checkPrivilege(authUser, PrivilegeUtil.SEE_ALL_ORDERS)) {
-            return Body.createResponse(body, Response.Status.UNAUTHORIZED, MessageUtil.USER_NOT_ENOUGH_PRIVILEGE, null);
+            return Body.createResponse(body, Response.Status.BAD_REQUEST, MessageUtil.USER_NOT_ENOUGH_PRIVILEGE, null);
         }
 
         try {
@@ -41,7 +41,7 @@ public class OrderService {
     public Response getUserOrders(User authUser, int id) {
         Body body = new Body();
         if(!PrivilegeUtil.checkPrivilege(authUser, PrivilegeUtil.SEE_USER_ORDERS)) {
-            return Body.createResponse(body, Response.Status.UNAUTHORIZED, MessageUtil.USER_NOT_ENOUGH_PRIVILEGE, null);
+            return Body.createResponse(body, Response.Status.BAD_REQUEST, MessageUtil.USER_NOT_ENOUGH_PRIVILEGE, null);
         }
         try {
             ArrayList<Order> orders = orderDAO.getUserOrders(id);

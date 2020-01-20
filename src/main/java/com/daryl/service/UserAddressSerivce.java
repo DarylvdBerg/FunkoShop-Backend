@@ -30,15 +30,15 @@ public class UserAddressSerivce {
         }
     }
 
-    public Response updateUserAddress(User authUser, int userId, String streetName, String zipCode, String district) {
+    public Response updateUserAddress(User authUser, int userId, String streetAddress, String zipCode, String district) {
         Body body = new Body();
 
         if(!PrivilegeUtil.checkPrivilege(authUser, PrivilegeUtil.UPDATE_USER_INFO)) {
-            return Body.createResponse(body, Response.Status.UNAUTHORIZED, MessageUtil.USER_NOT_ENOUGH_PRIVILEGE, null);
+            return Body.createResponse(body, Response.Status.BAD_REQUEST, MessageUtil.USER_NOT_ENOUGH_PRIVILEGE, null);
         }
 
         try {
-            boolean updated = this.userAddressDAO.update(streetName, zipCode, district, userId);
+            boolean updated = this.userAddressDAO.update(streetAddress, zipCode, district, userId);
             return updated ? Body.createResponse(body, Response.Status.OK, MessageUtil.ADDRESS_UPDATED, null) :
                     Body.createResponse(body, Response.Status.BAD_REQUEST, MessageUtil.ADDRESS_NOT_UPDATED, null);
         } catch(UnableToExecuteStatementException e) {
@@ -50,7 +50,7 @@ public class UserAddressSerivce {
         Body body = new Body();
 
         if(!PrivilegeUtil.checkPrivilege(authUser, PrivilegeUtil.CHECK_USER_PROFILE)) {
-            return Body.createResponse(body, Response.Status.UNAUTHORIZED, MessageUtil.USER_NOT_ENOUGH_PRIVILEGE, null);
+            return Body.createResponse(body, Response.Status.BAD_REQUEST, MessageUtil.USER_NOT_ENOUGH_PRIVILEGE, null);
         }
 
         try {
