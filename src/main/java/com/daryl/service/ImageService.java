@@ -6,6 +6,7 @@ import com.daryl.api.User;
 import com.daryl.config.ImageConfig;
 import com.daryl.core.Body;
 import com.daryl.api.Image;
+import com.daryl.core.JwtHelper;
 import com.daryl.db.ImageDAO;
 import com.daryl.db.ProductDAO;
 import com.daryl.util.MessageUtil;
@@ -22,6 +23,7 @@ import javax.ws.rs.core.Response;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public class ImageService {
@@ -38,8 +40,10 @@ public class ImageService {
         imageDAO.createTable();
     }
 
-    public Response getImage(int imageId){
+    public Response getImage(Optional<User> optinalUser, int imageId){
         Body body = new Body();
+
+        JwtHelper.renewAuthToken(body, optinalUser);
 
         // Check if image exists in DB
         Image image = imageDAO.getImage(imageId);

@@ -6,6 +6,7 @@ public class Body {
     private Response.Status status;
     private String message;
     private Object content;
+    private String authToken;
 
     public Body(){
         status = Response.Status.OK;
@@ -33,6 +34,14 @@ public class Body {
 
     public void setContent(Object content) {
         this.content = content;
+    }
+
+    public String getAuthToken() {
+        return authToken;
+    }
+
+    public void setAuthToken(String authToken) {
+        this.authToken = authToken;
     }
 
     public javax.ws.rs.core.Response build(){

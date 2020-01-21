@@ -8,6 +8,7 @@ import org.glassfish.jersey.media.multipart.FormDataMultiPart;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.Optional;
 
 @Path("/images")
 @Produces(MediaType.APPLICATION_JSON)
@@ -21,8 +22,8 @@ public class ImageResource {
 
     @GET
     @Path("/{id}")
-    public Response getImage(@PathParam("id") int imageId) {
-        return service.getImage(imageId);
+    public Response getImage(@Auth Optional<User> optionalUser, @PathParam("id") int imageId) {
+        return service.getImage(optionalUser, imageId);
     }
 
     @POST

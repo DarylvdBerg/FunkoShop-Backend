@@ -25,7 +25,7 @@ public class OrderResource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createOrder(@Auth User authUser, @Valid @NotNull List<Cart> cartItems) {
-       return orderService.createOrder(cartItems);
+       return orderService.createOrder(authUser, cartItems);
     }
 
     @Path("/all")

@@ -12,6 +12,7 @@ public class PrivilegeUtil {
     public static final int UPDATE_USER_INFO = 0;
     public static final int CHECK_USER_PROFILE = 0;
     public static final int SEE_USER_ORDERS = 0;
+    public static final int CAN_ORDER = 0;
 
     // MODERATOR
     public static final int ADD_PRODUCT = 1;

@@ -51,7 +51,6 @@ public class UserService {
             return Body.createResponse(body, Response.Status.BAD_REQUEST, MessageUtil.PASSWORD_LENGHT_TO_SHORT, null);
         }
 
-        name = trimName(name);
         String hashedPass = BCrypt.withDefaults().hashToString(COST, password.toCharArray());
 
         return createUser(email, name, hashedPass, body);
@@ -75,13 +74,6 @@ public class UserService {
         return password.length() >= 6;
     }
 
-    private String trimName(String name){
-        name = name.trim();
-        name = name.replace("<", "&lt;");
-        name = name.replace(">", "&gt;");
-        return name;
-    }
-
     public Response getUser(User authUser, int id){
         Body body = new Body();
 
@@ -92,6 +84,8 @@ public class UserService {
         if(!PrivilegeUtil.checkPrivilege(authUser, PrivilegeUtil.CHECK_USER_PROFILE)){
             return Body.createResponse(body, Response.Status.BAD_REQUEST, MessageUtil.USER_NOT_ENOUGH_PRIVILEGE, null);
         }
+
+        JwtHelper.renewAuthToken(body, authUser);
 
         User user = userDAO.getUserFromId(id);
         if(user == null){
@@ -115,6 +109,8 @@ public class UserService {
         if(!checkUserOldPassword(authUser, oldPassword)){
             return Body.createResponse(body, Response.Status.BAD_REQUEST, MessageUtil.PASSWORD_DO_NOT_MATCH, null);
         }
+
+        JwtHelper.renewAuthToken(body, authUser);
 
         String hashedPass = BCrypt.withDefaults().hashToString(COST, password.toCharArray());
         userDAO.updateUserPassword(hashedPass, id);
@@ -147,10 +143,10 @@ public class UserService {
         if(!checkIfEmailIsValid(email)){
             return Body.createResponse(body, Response.Status.BAD_REQUEST, MessageUtil.EMAIL_NOT_VALID, null);
         }
-        name = trimName(name);
+
+        JwtHelper.renewAuthToken(body, authUser);
 
         userDAO.updateUserDetails(email, name);
-
         return Body.createResponse(body, Response.Status.OK, MessageUtil.USER_UPDATED, null);
     }
 }
