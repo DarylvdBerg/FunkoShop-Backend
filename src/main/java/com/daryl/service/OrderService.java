@@ -5,6 +5,7 @@ import com.daryl.api.Cart;
 import com.daryl.api.Order;
 import com.daryl.api.User;
 import com.daryl.core.Body;
+import com.daryl.core.JwtHelper;
 import com.daryl.db.OrderDAO;
 import com.daryl.util.MessageUtil;
 import com.daryl.util.PrivilegeUtil;
@@ -25,6 +26,8 @@ public class OrderService {
     public Response getAllOrders(User authUser) {
         Body body = new Body();
 
+        JwtHelper.renewAuthToken(body, authUser);
+
         if(!PrivilegeUtil.checkPrivilege(authUser, PrivilegeUtil.SEE_ALL_ORDERS)) {
             return Body.createResponse(body, Response.Status.BAD_REQUEST, MessageUtil.USER_NOT_ENOUGH_PRIVILEGE, null);
         }
@@ -40,6 +43,9 @@ public class OrderService {
 
     public Response getUserOrders(User authUser, int id) {
         Body body = new Body();
+
+        JwtHelper.renewAuthToken(body, authUser);
+
         if(!PrivilegeUtil.checkPrivilege(authUser, PrivilegeUtil.SEE_USER_ORDERS)) {
             return Body.createResponse(body, Response.Status.BAD_REQUEST, MessageUtil.USER_NOT_ENOUGH_PRIVILEGE, null);
         }
@@ -51,8 +57,15 @@ public class OrderService {
         }
     }
 
-    public Response createOrder(List<Cart> cartList) {
+    public Response createOrder(User authUser, List<Cart> cartList) {
         Body body = new Body();
+
+        if(!PrivilegeUtil.checkPrivilege(authUser, PrivilegeUtil.CAN_ORDER)) {
+            return Body.createResponse(body, Response.Status.BAD_REQUEST, MessageUtil.ORDER_CREATED_FAILED, null);
+        }
+
+        JwtHelper.renewAuthToken(body, authUser);
+
         boolean created = false;
         try {
             for(Cart cart: cartList) {

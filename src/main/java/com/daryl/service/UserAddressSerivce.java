@@ -4,6 +4,7 @@ import com.daryl.FunkoShopApplication;
 import com.daryl.api.User;
 import com.daryl.api.UserAddress;
 import com.daryl.core.Body;
+import com.daryl.core.JwtHelper;
 import com.daryl.db.UserAddressDAO;
 import com.daryl.util.MessageUtil;
 import com.daryl.util.PrivilegeUtil;
@@ -37,6 +38,8 @@ public class UserAddressSerivce {
             return Body.createResponse(body, Response.Status.BAD_REQUEST, MessageUtil.USER_NOT_ENOUGH_PRIVILEGE, null);
         }
 
+        JwtHelper.renewAuthToken(body, authUser);
+
         try {
             boolean updated = this.userAddressDAO.update(streetAddress, zipCode, district, userId);
             return updated ? Body.createResponse(body, Response.Status.OK, MessageUtil.ADDRESS_UPDATED, null) :
@@ -52,6 +55,8 @@ public class UserAddressSerivce {
         if(!PrivilegeUtil.checkPrivilege(authUser, PrivilegeUtil.CHECK_USER_PROFILE)) {
             return Body.createResponse(body, Response.Status.BAD_REQUEST, MessageUtil.USER_NOT_ENOUGH_PRIVILEGE, null);
         }
+
+        JwtHelper.renewAuthToken(body, authUser);
 
         try {
             UserAddress userAddress = this.userAddressDAO.getUserAddress(userId);

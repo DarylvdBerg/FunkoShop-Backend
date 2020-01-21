@@ -4,6 +4,7 @@ import com.daryl.FunkoShopApplication;
 import com.daryl.api.Product;
 import com.daryl.api.User;
 import com.daryl.core.Body;
+import com.daryl.core.JwtHelper;
 import com.daryl.db.ImageDAO;
 import com.daryl.db.ProductDAO;
 import com.daryl.util.MessageUtil;
@@ -17,6 +18,7 @@ import javax.ws.rs.core.Response;
 import java.io.File;
 import java.io.InputStream;
 import java.util.List;
+import java.util.Optional;
 
 import static javax.ws.rs.core.Response.Status.*;
 
@@ -30,8 +32,11 @@ public class ProductService {
         productDAO.createTable();
     }
 
-    public Response getProduct(int id){
+    public Response getProduct(int id, Optional<User> optionalUser){
         Body body = new Body();
+
+        JwtHelper.renewAuthToken(body, optionalUser);
+
         Product product = productDAO.getProduct(id);
 
         if(product == null){
@@ -43,8 +48,11 @@ public class ProductService {
         return Body.createResponse(body, OK, MessageUtil.PRODUCT_FOUND, product);
     }
 
-    public Response getAllProducts(){
+    public Response getAllProducts(Optional<User> optionalUser){
         Body body = new Body();
+
+        JwtHelper.renewAuthToken(body, optionalUser);
+
         List<Product> productList = productDAO.getAllProducts();
         for(Product product : productList){
             fillProductImages(product);
@@ -57,6 +65,8 @@ public class ProductService {
         if(!PrivilegeUtil.checkPrivilege(authUser, PrivilegeUtil.UPDATE_PRODUCT)){
             return Body.createResponse(body, BAD_REQUEST, MessageUtil.USER_NOT_ENOUGH_PRIVILEGE, null);
         }
+
+        JwtHelper.renewAuthToken(body, authUser);
 
         try {
             boolean updated = productDAO.updateProduct(name, description, price, id);
@@ -72,6 +82,8 @@ public class ProductService {
         if(!PrivilegeUtil.checkPrivilege(authUser, PrivilegeUtil.DELETE_PRODUCT)){
             Body.createResponse(body, BAD_REQUEST, MessageUtil.USER_NOT_ENOUGH_PRIVILEGE, null);
         }
+
+        JwtHelper.renewAuthToken(body, authUser);
 
         Product product = productDAO.getProduct(id);
         if(product == null){
@@ -92,6 +104,8 @@ public class ProductService {
         if(!PrivilegeUtil.checkPrivilege(authUser, PrivilegeUtil.ADD_PRODUCT)){
             return Body.createResponse(body, BAD_REQUEST, MessageUtil.USER_NOT_ENOUGH_PRIVILEGE, null);
         }
+
+        JwtHelper.renewAuthToken(body, authUser);
 
         try {
             int productId = productDAO.addProduct(name, description, price);

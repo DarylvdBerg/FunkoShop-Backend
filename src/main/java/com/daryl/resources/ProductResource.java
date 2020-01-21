@@ -8,6 +8,7 @@ import javax.validation.constraints.NotNull;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.Optional;
 
 @Path("/product")
 @Produces(MediaType.APPLICATION_JSON)
@@ -20,14 +21,14 @@ public class ProductResource {
 
     @Path("/{id}")
     @GET
-    public Response getProduct(@PathParam("id") int id){
-        return productService.getProduct(id);
+    public Response getProduct(@PathParam("id") int id, @Auth Optional<User> optionalUser){
+        return productService.getProduct(id, optionalUser);
     }
 
     @Path("/all")
     @GET
-    public Response getAllProducts(){
-        return productService.getAllProducts();
+    public Response getAllProducts(@Auth Optional<User> optionalUser){
+        return productService.getAllProducts(optionalUser);
     }
 
     @Path("/update/{id}")
