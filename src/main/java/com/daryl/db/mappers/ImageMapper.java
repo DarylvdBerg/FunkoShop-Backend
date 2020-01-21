@@ -1,6 +1,6 @@
 package com.daryl.db.mappers;
 
-import com.daryl.core.Image;
+import com.daryl.api.Image;
 import org.jdbi.v3.core.mapper.RowMapper;
 import org.jdbi.v3.core.statement.StatementContext;
 

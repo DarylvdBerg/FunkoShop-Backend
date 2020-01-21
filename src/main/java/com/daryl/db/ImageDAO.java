@@ -1,6 +1,6 @@
 package com.daryl.db;
 
-import com.daryl.core.Image;
+import com.daryl.api.Image;
 import com.daryl.db.mappers.ImageMapper;
 import org.jdbi.v3.sqlobject.config.RegisterRowMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;

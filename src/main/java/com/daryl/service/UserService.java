@@ -90,7 +90,7 @@ public class UserService {
         }
 
         if(!PrivilegeUtil.checkPrivilege(authUser, PrivilegeUtil.CHECK_USER_PROFILE)){
-            return Body.createResponse(body, Response.Status.UNAUTHORIZED, MessageUtil.USER_NOT_ENOUGH_PRIVILEGE, null);
+            return Body.createResponse(body, Response.Status.BAD_REQUEST, MessageUtil.USER_NOT_ENOUGH_PRIVILEGE, null);
         }
 
         User user = userDAO.getUserFromId(id);
@@ -109,7 +109,7 @@ public class UserService {
         }
 
         if(!PrivilegeUtil.checkPrivilege(authUser, PrivilegeUtil.CHANGE_PASSWORD)){
-            return Body.createResponse(body, Response.Status.UNAUTHORIZED, MessageUtil.USER_NOT_ENOUGH_PRIVILEGE, null);
+            return Body.createResponse(body, Response.Status.BAD_REQUEST, MessageUtil.USER_NOT_ENOUGH_PRIVILEGE, null);
         }
 
         if(!checkUserOldPassword(authUser, oldPassword)){
@@ -126,7 +126,7 @@ public class UserService {
         String password = userDAO.getPasswordFromEmail(authUser.getEmail());
 
         BCrypt.Result result = BCrypt.verifyer().verify(oldPassword.toCharArray(), password);
-        return result.validFormat || result.verified;
+        return result.validFormat && result.verified;
     }
 
     private boolean checkUserId(User authUser, int id){
@@ -141,7 +141,7 @@ public class UserService {
         }
 
         if(!PrivilegeUtil.checkPrivilege(authUser, PrivilegeUtil.UPDATE_USER_INFO)){
-            return Body.createResponse(body, Response.Status.UNAUTHORIZED, MessageUtil.USER_NOT_ENOUGH_PRIVILEGE, null);
+            return Body.createResponse(body, Response.Status.BAD_REQUEST, MessageUtil.USER_NOT_ENOUGH_PRIVILEGE, null);
         }
 
         if(!checkIfEmailIsValid(email)){

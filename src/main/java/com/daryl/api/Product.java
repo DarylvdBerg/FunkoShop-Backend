@@ -1,8 +1,5 @@
 package com.daryl.api;
 
-import com.daryl.core.Image;
-
-import java.io.File;
 import java.util.ArrayList;
 
 public class Product {
@@ -10,9 +7,9 @@ public class Product {
     private String name;
     private String description;
     private ArrayList<Image> images;
-    private double price;
+    private String price;
 
-    public Product(int id, String name, String description, double price){
+    public Product(int id, String name, String description, String price){
         this.id = id;
         this.name = name;
         this.description = description;
@@ -47,11 +44,11 @@ public class Product {
         this.images = images;
     }
 
-    public double getPrice() {
+    public String getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(String price) {
         this.price = price;
     }
 

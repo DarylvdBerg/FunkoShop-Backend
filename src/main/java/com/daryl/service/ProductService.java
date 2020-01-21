@@ -55,7 +55,7 @@ public class ProductService {
     public Response updateProduct(User authUser, int id, String name, String description, double price){
         Body body = new Body();
         if(!PrivilegeUtil.checkPrivilege(authUser, PrivilegeUtil.UPDATE_PRODUCT)){
-            return Body.createResponse(body, UNAUTHORIZED, MessageUtil.USER_NOT_ENOUGH_PRIVILEGE, null);
+            return Body.createResponse(body, BAD_REQUEST, MessageUtil.USER_NOT_ENOUGH_PRIVILEGE, null);
         }
 
         try {
@@ -70,7 +70,7 @@ public class ProductService {
     public Response deleteProduct(User authUser, int id) {
         Body body = new Body();
         if(!PrivilegeUtil.checkPrivilege(authUser, PrivilegeUtil.DELETE_PRODUCT)){
-            Body.createResponse(body, UNAUTHORIZED, MessageUtil.USER_NOT_ENOUGH_PRIVILEGE, null);
+            Body.createResponse(body, BAD_REQUEST, MessageUtil.USER_NOT_ENOUGH_PRIVILEGE, null);
         }
 
         Product product = productDAO.getProduct(id);
@@ -90,7 +90,7 @@ public class ProductService {
     public Response addProduct(User authUser, String name, String description, double price) {
         Body body = new Body();
         if(!PrivilegeUtil.checkPrivilege(authUser, PrivilegeUtil.ADD_PRODUCT)){
-            return Body.createResponse(body, UNAUTHORIZED, MessageUtil.USER_NOT_ENOUGH_PRIVILEGE, null);
+            return Body.createResponse(body, BAD_REQUEST, MessageUtil.USER_NOT_ENOUGH_PRIVILEGE, null);
         }
 
         try {

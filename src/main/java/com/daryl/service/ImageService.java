@@ -5,7 +5,7 @@ import com.daryl.api.Product;
 import com.daryl.api.User;
 import com.daryl.config.ImageConfig;
 import com.daryl.core.Body;
-import com.daryl.core.Image;
+import com.daryl.api.Image;
 import com.daryl.db.ImageDAO;
 import com.daryl.db.ProductDAO;
 import com.daryl.util.MessageUtil;
@@ -20,7 +20,6 @@ import javax.ws.rs.ServerErrorException;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
 import java.io.*;
-import java.security.acl.LastOwnerException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -70,7 +69,7 @@ public class ImageService {
         Body body = new Body();
 
         if(!PrivilegeUtil.checkPrivilege(authUser, PrivilegeUtil.ADD_PRODUCT)){
-            return Body.createResponse(body, Response.Status.UNAUTHORIZED, MessageUtil.USER_NOT_ENOUGH_PRIVILEGE, null);
+            return Body.createResponse(body, Response.Status.BAD_REQUEST, MessageUtil.USER_NOT_ENOUGH_PRIVILEGE, null);
         }
 
         List<Image> images = new ArrayList<>();

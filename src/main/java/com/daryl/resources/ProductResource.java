@@ -3,8 +3,6 @@ package com.daryl.resources;
 import com.daryl.api.User;
 import com.daryl.service.ProductService;
 import io.dropwizard.auth.Auth;
-import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
-import org.glassfish.jersey.media.multipart.FormDataParam;
 
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.*;

@@ -1,4 +1,4 @@
-package com.daryl.core;
+package com.daryl.api;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
