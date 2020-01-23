@@ -1,11 +1,11 @@
 package com.daryl.service;
 
 import com.daryl.FunkoShopApplication;
+import com.daryl.api.Image;
 import com.daryl.api.Product;
 import com.daryl.api.User;
 import com.daryl.config.ImageConfig;
 import com.daryl.core.Body;
-import com.daryl.api.Image;
 import com.daryl.core.JwtHelper;
 import com.daryl.db.ImageDAO;
 import com.daryl.db.ProductDAO;
