@@ -1,0 +1,53 @@
+logging:
+  level: INFO
+  loggers:
+    IPRWC: DEBUG
+
+jwtSecret: "!sKC$JbMQe366WqyCsnt6CP+rvg#yc#W7Br#ju+54_-Yg4%?Um+Rm-4&AZndtE^=2U=$^9Y%HQ@aac8DuJH2##zuu6#TLu8CkcdcZyaXL%QyzZr4y^*_*DckXB-3NvS*NQwdy=Y8tH2cbh@uzNh%D#QGTQv#ZGh5EKyq=Y&WvbA4&w334V-_Umqk-L$#yzuYUMMeCNZ3L*jTw$a3tLnCR%znD_8v&TF7tu@SGApcGW3Ls*bTw@MnnyWfdurZr#q_"
+
+images:
+  saveFolder: "assets/"
+  allowedMimeTypes:
+    - "image/jpeg"
+    - "image/png"
+
+database:
+  # the name of your JDBC driver
+  driverClass: org.postgresql.Driver
+
+  # the username
+  user: funko
+
+  # the password
+  password: dbey9j6EAsY4uc4R
+
+  # the JDBC URL
+  url: jdbc:postgresql://db.darylvdberg.nl/funkoshop
+
+  # any properties specific to your JDBC driver:
+  properties:
+    charSet: UTF-8
+
+  # the maximum amount of time to wait on an empty pool before throwing an exception
+  maxWaitForConnection: 1s
+
+  # the SQL query to run when validating a connection's liveness
+  validationQuery: "/* MyService Health Check */ SELECT 1"
+
+  # the timeout before a connection validation queries fail
+  validationQueryTimeout: 3s
+
+  # the minimum number of connections to keep open
+  minSize: 8
+
+  # the maximum number of connections to keep open
+  maxSize: 32
+
+  # whether or not idle connections should be validated
+  checkConnectionWhileIdle: false
+
+  # the amount of time to sleep between runs of the idle connection validation, abandoned cleaner and idle pool resizing
+  evictionInterval: 10s
+
+  # the minimum amount of time an connection must sit idle in the pool before it is eligible for eviction
+  minIdleTime: 1 minute
