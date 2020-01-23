@@ -9,14 +9,9 @@ import com.daryl.db.ImageDAO;
 import com.daryl.db.ProductDAO;
 import com.daryl.util.MessageUtil;
 import com.daryl.util.PrivilegeUtil;
-import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.jdbi.v3.core.statement.UnableToExecuteStatementException;
 
-import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
-
-import java.io.File;
-import java.io.InputStream;
 import java.util.List;
 import java.util.Optional;
 
